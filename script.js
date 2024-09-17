@@ -1,40 +1,35 @@
-const express = require('express')
-const app = express()
-const port = 3000
-
-// criando a calculadora e suas operações 
-
-
-app.get('/calculadora', (req, res) => {
-    const operacao = req.query.operacao;
-    const n1 = parseFloat(req.query.n1);
-    const n2 = parseFloat(req.query.n2);
-
-    if (!operacao || isNaN(n1) || isNaN(n2)) {
-        return res.status(400).send('error 400-bad request.');
-    }
-
-    let resultado;
-
-    if (operacao === 'soma') {
-        resultado = n1 + n2;
-    } else if (operacao === 'subtracao') {
-        resultado = n1 - n2;
-    } else if (operacao === 'multiplicacao') {
-        resultado = n1 * n2;
-    } else if (operacao === 'divisao') {
-        if (n2 === 0) {
-            return res.status(400).send('error 400-bad request.');
-        }
-        resultado = n1 / n2;
-    } else {
-        return res.status(400).send('error 400-bad request.');
-    }
-
-    res.send(`Resultado: ${resultado}`);
+document.getElementById('bookingForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
+    
+    const name = document.getElementById('name').value;
+    const date = document.getElementById('date').value;
+    
+    
+    
+    const response = await fetch('http://localhost:3000/bookings', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, date, time })
+    });
+    
+    const result = await response.json();
+    
+    document.getElementById('message').textContent = result.message;
 });
 
-
-app.listen(port, () => {
-    console.log(`Servidor rodando em http://localhost:${port}`);
+document.getElementById('viewBookings').addEventListener('click', async function() {
+    const response = await fetch('http://localhost:3000/bookings');
+    const bookings = await response.json();
+    
+    const bookingsList = document.getElementById('bookingsList');
+    bookingsList.innerHTML = '';
+    
+    bookings.forEach(booking => {
+        const bookingItem = document.createElement('div');
+        bookingItem.className = 'booking-item';
+        bookingItem.textContent = `Nome: ${booking.name}, Data: ${booking.date}, Hora: ${booking.time}`;
+        bookingsList.appendChild(bookingItem);
+    });
 });

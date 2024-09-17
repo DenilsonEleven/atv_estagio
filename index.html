@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamento de Quadra</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Agendamento de Quadra Esportiva</h1>
+        <form id="bookingForm">
+            <label for="name">Nome:</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="date">Data:</label>
+            <input type="date" id="date" name="date" required>
+            
+            <fieldset>
+                <legend>Horários Disponíveis                    
+                </legend>           
+            <select id="time" class="time" required>
+              <option value="time" selected=>Selecione um horário</option>
+              <option>17:00</option>
+              <option>18:00</option> 
+              <option>19:00</option>
+              <option>20:00</option>                      
+            </select>  	
+            </fieldset><br><br>	
+            
+            <button type="submit">Agendar</button>
+            <button id="viewBookings">Ver Horários Agendados</button>
+        <div id="message"></div>
+        <div id="bookingsList"></div>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
