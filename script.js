@@ -1,17 +1,17 @@
-document.getElementById('bookingForm').addEventListener('submit', async function(event) {
+document.getElementById('agendForm').addEventListener('submit', async function(event) {
     event.preventDefault();
     
-    const name = document.getElementById('name').value;
-    const date = document.getElementById('date').value;
+    const nome = document.getElementById('nome').value;
+    const data = document.getElementById('data').value;
+    const horario = document.getElementById('horario').value;
+    const esporte = document.getElementById('esporte').value;
     
-    
-    
-    const response = await fetch('http://localhost:3000/bookings', {
+    const response = await fetch('http://localhost:3000/agendamento', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ name, date, time })
+        body: JSON.stringify({ nome, data, horario, esporte })
     });
     
     const result = await response.json();
@@ -19,17 +19,17 @@ document.getElementById('bookingForm').addEventListener('submit', async function
     document.getElementById('message').textContent = result.message;
 });
 
-document.getElementById('viewBookings').addEventListener('click', async function() {
-    const response = await fetch('http://localhost:3000/bookings');
-    const bookings = await response.json();
+document.getElementById('verAgendamentos').addEventListener('click', async function() {
+    const response = await fetch('http://localhost:3000/agendamento');
+    const agendamentos = await response.json();
     
-    const bookingsList = document.getElementById('bookingsList');
-    bookingsList.innerHTML = '';
+    const agendamentosList = document.getElementById('listaDAgend');
+    agendamentosList.innerHTML = '';
     
-    bookings.forEach(booking => {
-        const bookingItem = document.createElement('div');
-        bookingItem.className = 'booking-item';
-        bookingItem.textContent = `Nome: ${booking.name}, Data: ${booking.date}, Hora: ${booking.time}`;
-        bookingsList.appendChild(bookingItem);
+    agendamentos.forEach(agendamento => {
+        const agendamentoItem = document.createElement('div');
+        agendamentoItem.className = 'agendamento-item';
+        agendamentoItem.textContent = `Nome: ${agendamento.nome}, Data: ${agendamento.data}, Hora: ${agendamento.horario}, Esporte: ${agendamento.esporte}`;
+        agendamentosList.appendChild(agendamentoItem);
     });
 });
