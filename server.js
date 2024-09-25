@@ -23,7 +23,7 @@ db.connect((err) => {
 });
 
 app.post('/agendamento', (req, res) => {
-    const { nome, data, horario,esporte } = req.body;
+    const { nome, data, horario, esporte } = req.body;
     const query = 'INSERT INTO agendamentos (nome, data, horario,esporte) VALUES (?, ?, ?, ?)';
     db.query(query, [nome, data, horario,esporte], (err, result) => {
         if (err) {
